@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 .vscode
+/wwwroot/uploads/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
