@@ -1,39 +1,23 @@
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 
 namespace MindMinersTest.Models
 {
-    [DataContract]
     public class FileModel
     {
-        public FileModel(IFormFile srtFile, string offset)
-        {
-            SrtFile = srtFile;
-            Offset = offset;       
+        public IFormFile SrtFile { get; set; }
 
-            Validate();     
-        }
-
-        private void Validate()
-        {
-            throw new NotImplementedException();
-        }
-
-        [DataMember]
-        public IFormFile SrtFile { get; private set; }
-        [DataMember]
-        public string Offset { get; private set; }
+        public string Offset { get; set; }
 
         [JsonIgnore]
-        public StringBuilder OffsetResult { get; private set; }
+        public string OffsetResult { get; set; }
 
         public async void UpdateFileOffset()
         {
-            OffsetResult = new StringBuilder();
+            var result = new StringBuilder();
             using (var reader = new StreamReader(SrtFile.OpenReadStream()))
             {
                 while (!reader.EndOfStream)
@@ -52,8 +36,9 @@ namespace MindMinersTest.Models
                         lineText = $"{oldText} {time.ToString("HH:mm:ss,fff")}";
                     }
 
-                    OffsetResult.AppendLine(lineText);
+                    result.AppendLine(lineText);
                 }
+                OffsetResult = result.ToString();
             }
         }
 
