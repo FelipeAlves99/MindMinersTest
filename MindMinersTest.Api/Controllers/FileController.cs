@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MindMinersTest.Models;
@@ -44,8 +43,8 @@ namespace MindMinersTest.Controllers
                 return BadRequest(model.Notifications.FirstOrDefault());
 
             model.UpdateFileOffset();
-
             SaveFileWirhOffset(model);
+
             return DownloadFile(model.SrtFile.FileName);
         }        
 
