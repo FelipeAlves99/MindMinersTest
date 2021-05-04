@@ -26,13 +26,12 @@ namespace MindMinersTest.Models
                 AddNotification("SrtFile", "O arquivo deve ser .srt");
             if (SrtFile.Length > 200000)
                 AddNotification("SrtFile", "O arquivo não deve ultrapassar os 200Kb");
-            if (await FileSignatureIsTrusted())
+            if (await FileSignatureIsNotTrusted())
                 AddNotification("SrtFile", "O arquivo possui conteudo diferente do esperado");            
         }
 
-        private async Task<bool> FileSignatureIsTrusted()
+        private async Task<bool> FileSignatureIsNotTrusted()
         {
-
             using (var reader = new StreamReader(SrtFile.OpenReadStream()))
             {
                 int loopCount = 1;
@@ -55,11 +54,11 @@ namespace MindMinersTest.Models
                     }
                     else if (loopCount == 1)
                     {
-                        return false;
+                        return true;
                     }
                     else if (tries == 0)
                     {
-                        return false;
+                        return true;
                     }
                     else
                     {
@@ -68,7 +67,7 @@ namespace MindMinersTest.Models
                     }
                 }
 
-                return true;
+                return false;
             }
         }
 
@@ -85,12 +84,13 @@ namespace MindMinersTest.Models
                     {
                         Offset = Offset.Replace(",", ".");
                         TimeSpan.TryParseExact(Offset, @"hh\:mm\:ss\.fff", null, out TimeSpan offsetTime);
+                                   
+                        DateTime firstTimeCode = DateTime.Parse(lineText.Replace(",", ".").Substring(0, 12));
+                        DateTime lastTimeCode = DateTime.Parse(lineText.Replace(",", ".").Substring(17));
+                        firstTimeCode = firstTimeCode.Add(offsetTime);
+                        lastTimeCode = lastTimeCode.Add(offsetTime);
 
-                        string oldText = lineText.Substring(0, 16);
-                        DateTime time = DateTime.Parse(lineText.Replace(",", ".").Substring(17));
-                        time = time.Add(offsetTime);
-
-                        lineText = $"{oldText} {time.ToString("HH:mm:ss,fff")}";
+                        lineText = $"{firstTimeCode.ToString("HH:mm:ss,fff")} --> {lastTimeCode.ToString("HH:mm:ss,fff")}";
                     }
 
                     result.AppendLine(lineText);
