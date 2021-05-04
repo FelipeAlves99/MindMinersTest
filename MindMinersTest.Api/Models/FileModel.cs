@@ -27,7 +27,7 @@ namespace MindMinersTest.Models
             if (SrtFile.Length > 200000)
                 AddNotification("SrtFile", "O arquivo não deve ultrapassar os 200Kb");
             if (await FileSignatureIsNotTrusted())
-                AddNotification("SrtFile", "O arquivo possui conteudo diferente do esperado");            
+                AddNotification("SrtFile", "O arquivo possui conteudo diferente do esperado");
         }
 
         private async Task<bool> FileSignatureIsNotTrusted()
@@ -84,7 +84,7 @@ namespace MindMinersTest.Models
                     {
                         Offset = Offset.Replace(",", ".");
                         TimeSpan.TryParseExact(Offset, @"hh\:mm\:ss\.fff", null, out TimeSpan offsetTime);
-                                   
+
                         DateTime firstTimeCode = DateTime.Parse(lineText.Replace(",", ".").Substring(0, 12));
                         DateTime lastTimeCode = DateTime.Parse(lineText.Replace(",", ".").Substring(17));
                         firstTimeCode = firstTimeCode.Add(offsetTime);

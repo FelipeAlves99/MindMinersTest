@@ -10,7 +10,7 @@
 *.userosscache
 *.sln.docstates
 .vscode
-MindMinersTest.Api/wwwroot/uploads/*
+MindMinersTest.Api/wwwroot/uploads/*.srt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
