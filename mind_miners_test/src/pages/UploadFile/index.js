@@ -33,10 +33,6 @@ export default function UploadFile() {
         const options = {
             method: "POST",
             body: data
-            // If you add this, upload won't work
-            // headers: {
-            //   'Content-Type': 'multipart/form-data',
-            // }
         };
         fetch(`${API_URL}/File`, options)
             .then(response => response.blob())
@@ -63,7 +59,7 @@ export default function UploadFile() {
                         Abrir histórico
                     </Link>
                 </form>
-                {responseLink && <a href={downloadLink} download>Download</a>}            
+                {responseLink && <a href={downloadLink} download="legenda-com-offset.srt">Download</a>}            
             </section>
         </div>
     );

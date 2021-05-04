@@ -33,6 +33,8 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    overflow-y: auto;
 }
 
 .historico div  {
@@ -48,13 +50,20 @@
     justify-content: space-between;
 
     margin: 15px auto;
+}
+
+.historico div div p{
+    font-size: 15px;
+    max-width: 70%;
+
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-.historico div div p{
+.historico div div div{
     font-size: 15px;
+    max-width: 30%;
 }
 
 

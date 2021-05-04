@@ -31,8 +31,6 @@ export default function DownloadFile() {
 
     const fileLink = (e) => {
 
-        console.log("entrei")
-
         const options = {
             method: "GET",
             headers: {
@@ -59,7 +57,10 @@ export default function DownloadFile() {
                         return (
                             <div key={fileName}>
                                 <p>{fileName}</p>
-                                <a href={downloadLink} download="legenda-com-offset.srt" onClick={() => fileLink(fileName) }> Download </a>
+
+                                <div>
+                                    <a href={downloadLink} download="legenda-com-offset.srt" onClick={() => fileLink(fileName)}> Download </a>
+                                </div>
                             </div>
                         );
                     })
