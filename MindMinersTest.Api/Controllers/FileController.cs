@@ -22,7 +22,7 @@ namespace MindMinersTest.Controllers
         public ActionResult<List<string>> GetFiles()
         {
             string path = _webHostEnv.WebRootPath + "\\uploads\\";
-            var list = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToList();
+            var list = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToList();        
             return Ok(list);
         }
 
@@ -35,8 +35,6 @@ namespace MindMinersTest.Controllers
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var a = model.SrtFile.Length;
 
             model.Validate();
             if(model.Invalid)
@@ -56,7 +54,7 @@ namespace MindMinersTest.Controllers
 
             using (StreamWriter sw = new StreamWriter(path + model.SrtFile.FileName))
             {
-                sw.WriteAsync(model.OffsetResult);
+                sw.Write(model.OffsetResult);
                 sw.Flush();
             }
         }
