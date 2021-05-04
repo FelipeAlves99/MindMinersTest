@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,9 +22,16 @@ namespace MindMinersTest.Controllers
         [HttpGet]
         public ActionResult<List<string>> GetFiles()
         {
-            string path = _webHostEnv.WebRootPath + "\\uploads\\";
-            var list = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToList();        
-            return Ok(list);
+            try
+            {
+                string path = _webHostEnv.WebRootPath + "\\uploads\\";
+                var list = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToList();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Erro inesperado, contate o administrador do site. Erro: " + ex.Message });
+            }
         }
 
         [HttpGet("Download")]
@@ -33,18 +41,25 @@ namespace MindMinersTest.Controllers
         [HttpPost]
         public ActionResult<FileModel> ReceiveFile([FromForm] FileModel model)
         {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            model.Validate();
-            if(model.Invalid)
-                return BadRequest(model.Notifications.FirstOrDefault());
+                model.Validate();
+                if (model.Invalid)
+                    return BadRequest(model.Notifications.FirstOrDefault());
 
-            model.UpdateFileOffset();
-            SaveFileWirhOffset(model);
+                model.UpdateFileOffset();
+                SaveFileWirhOffset(model);
 
-            return DownloadFile(model.SrtFile.FileName);
-        }        
+                return DownloadFile(model.SrtFile.FileName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Erro inesperado, contate o administrador do site. Erro: " + ex.Message });
+            }
+        }
 
         private void SaveFileWirhOffset(FileModel model)
         {
