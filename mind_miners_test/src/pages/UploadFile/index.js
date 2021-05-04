@@ -28,20 +28,20 @@ export default function UploadFile() {
         data.append('srtfile', file)
         data.append('offset', offset)
 
-        console.log(data);
-
         const options = {
             method: "POST",
             body: data
         };
         fetch(`${API_URL}/File`, options)
-            .then(response => response.blob())
+            .then(response => { 
+                response.blob()
+             })
             .then((response) => {
                 const url = window.URL.createObjectURL(new Blob([response]));
                 setDownloadLink(url);
                 setResponseLink(true);
             })
-            .catch(error => { console.log('request failed', error); });
+            .catch(error => { console.log('request failed', error.message); });
     }
 
     return (
@@ -54,12 +54,17 @@ export default function UploadFile() {
                     <button className="button" type="submit" onClick={sendFile}>
                         Adicionar offset
                     </button>
+                    {
+                        responseLink &&
+                        <div className="downloadLink">
+                            <a href={downloadLink} download="legenda-com-offset.srt">Download</a>
+                        </div>
+                    }
                     <Link className="file-list" to="/filelist">
                         <FiLogIn size={16} color="#e02041" />
                         Abrir histórico
                     </Link>
                 </form>
-                {responseLink && <a href={downloadLink} download="legenda-com-offset.srt">Download</a>}            
             </section>
         </div>
     );

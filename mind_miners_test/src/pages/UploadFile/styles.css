@@ -23,3 +23,9 @@
     font-size: 32px;
     margin-bottom: 32px;
 }
+
+.downloadLink {
+    width: 100%;
+    margin: 15px auto;
+    text-align: center;    
+}
