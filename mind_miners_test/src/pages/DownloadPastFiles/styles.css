@@ -1,25 +1,62 @@
-.logon-container {
+.downloadFile-container {
     width: 100%;
     max-width: 1120px;
     height: 100vh;
-    margin: 0 auto;
+    margin: auto;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
-.logon-container section.form {
+.downloadFile-container header{
     width: 100%;
     max-width: 350px;
-    margin: 30px;
+    margin: 200px auto 30px;
 }
 
-.logon-container section.form form {
-    margin-top: 100px;
-}
-
-.logon-container section.form form h1 {
+.downloadFile-container header h1 {
     font-size: 32px;
     margin-bottom: 32px;
+    margin: auto;
+    text-align: center;
 }
+
+.historico{
+    width: 100%;
+    max-width: 450px;
+    margin: 30px auto 0px;
+
+    border: 1px solid rgba(224, 32, 65, 0.4);
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.historico div  {
+    max-width: 100%;
+    max-height: 500px;
+}
+
+.historico div div {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin: 15px auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.historico div div p{
+    font-size: 15px;
+}
+
+
+
+
