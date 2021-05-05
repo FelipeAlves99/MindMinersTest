@@ -56,7 +56,7 @@ namespace MindMinersTest.Controllers
                 model.UpdateFileOffset();
                 _fileService.SaveFileWithOffset(model);
 
-                return DownloadFile(model.SrtFile.FileName);
+                return DownloadFile(model.FileName);
             }
             catch (Exception ex)
             {

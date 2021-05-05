@@ -20,6 +20,8 @@ namespace MindMinersTest.Models
 
         public string OffsetResult { get; set; }
 
+        public string FileName { get; set; }
+
         public async void Validate()
         {
             if (Path.GetExtension(SrtFile.FileName).ToLowerInvariant() != ".srt")
