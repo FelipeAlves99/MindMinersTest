@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using MindMinersTest.Interfaces.Services;
 using MindMinersTest.Models;
 
 namespace MindMinersTest.Controllers
@@ -13,10 +14,12 @@ namespace MindMinersTest.Controllers
     public class FileController : ControllerBase
     {
         public static IWebHostEnvironment _webHostEnv;
+        private IFileService _fileService { get; set; }
 
-        public FileController(IWebHostEnvironment webHostEnv)
+        public FileController(IWebHostEnvironment webHostEnv, IFileService fileService)
         {
             _webHostEnv = webHostEnv;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -51,26 +54,13 @@ namespace MindMinersTest.Controllers
                     return BadRequest(model.Notifications.FirstOrDefault());
 
                 model.UpdateFileOffset();
-                SaveFileWirhOffset(model);
+                _fileService.SaveFileWithOffset(model);
 
                 return DownloadFile(model.SrtFile.FileName);
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = "Erro inesperado, contate o administrador do site. Erro: " + ex.Message });
-            }
-        }
-
-        private void SaveFileWirhOffset(FileModel model)
-        {
-            string path = _webHostEnv.WebRootPath + "\\uploads\\";
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            using (StreamWriter sw = new StreamWriter(path + model.SrtFile.FileName))
-            {
-                sw.Write(model.OffsetResult);
-                sw.Flush();
             }
         }
     }
