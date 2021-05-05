@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
@@ -13,9 +14,11 @@ namespace MindMinersTest.Models
     public class FileModel : Notifiable
     {
         [DataMember]
+        [Required(ErrorMessage = "É necessário informar o arquivo")]
         public IFormFile SrtFile { get; set; }
 
         [DataMember]
+        [Required(ErrorMessage = "É necessário informar o offset")]
         public string Offset { get; set; }
 
         public string OffsetResult { get; set; }
@@ -24,12 +27,16 @@ namespace MindMinersTest.Models
 
         public async void Validate()
         {
-            if (SrtFile.FileName == null || Path.GetExtension(SrtFile.FileName).ToLowerInvariant() != ".srt")
+            if (Path.GetExtension(SrtFile.FileName).ToLowerInvariant() != ".srt")
                 AddNotification("SrtFile", "O arquivo deve ser .srt");
             if (SrtFile.Length > 200000)
                 AddNotification("SrtFile", "O arquivo não deve ultrapassar os 200Kb");
             if (await FileSignatureIsNotTrusted())
                 AddNotification("SrtFile", "O arquivo possui conteudo diferente do esperado");
+            if (Offset.Length < 1)
+                AddNotification("Offset", "O offset possui conteudo diferente do esperado (hh:mm:ss,fff)");
+            if (!TimeSpan.TryParseExact(Offset.Replace(",", "."), @"hh\:mm\:ss\.fff", null, out TimeSpan offsetTime))
+                AddNotification("Offset", "O offset possui conteudo diferente do esperado (hh:mm:ss,fff)");
         }
 
         private async Task<bool> FileSignatureIsNotTrusted()
@@ -86,7 +93,7 @@ namespace MindMinersTest.Models
                     {
                         Offset = Offset.Replace(",", ".");
                         TimeSpan.TryParseExact(Offset, @"hh\:mm\:ss\.fff", null, out TimeSpan offsetTime);
-
+                        
                         DateTime firstTimeCode = DateTime.Parse(lineText.Replace(",", ".").Substring(0, 12));
                         DateTime lastTimeCode = DateTime.Parse(lineText.Replace(",", ".").Substring(17));
                         firstTimeCode = firstTimeCode.Add(offsetTime);
