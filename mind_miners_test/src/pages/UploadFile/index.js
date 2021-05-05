@@ -33,15 +33,13 @@ export default function UploadFile() {
             body: data
         };
         fetch(`${API_URL}/File`, options)
-            .then(response => { 
-                response.blob()
-             })
+            .then(response => response.blob())
             .then((response) => {
                 const url = window.URL.createObjectURL(new Blob([response]));
                 setDownloadLink(url);
                 setResponseLink(true);
             })
-            .catch(error => { console.log('request failed', error.message); });
+            .catch(error => { console.log('request failed', error); });
     }
 
     return (

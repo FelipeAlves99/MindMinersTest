@@ -35,8 +35,8 @@ namespace MindMinersTest.Controllers
         }
 
         [HttpGet("Download")]
-        public FileResult DownloadFile(string fileName)
-            => File($"/uploads/{fileName}", "application/x-subrip", fileName);
+        public FileResult DownloadFile(string fileName)        
+            => File($"\\uploads\\{fileName}", "application/x-subrip", fileName);    
 
         [HttpPost]
         public ActionResult<FileModel> ReceiveFile([FromForm] FileModel model)
