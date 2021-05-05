@@ -26,10 +26,8 @@ namespace MindMinersTest.Controllers
         public ActionResult<List<string>> GetFiles()
         {
             try
-            {
-                string path = _webHostEnv.WebRootPath + "/uploads/";
-                var list = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToList();
-                return Ok(list);
+            {                
+                return Ok(_fileService.GetFiles());
             }
             catch (Exception ex)
             {
