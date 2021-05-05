@@ -24,7 +24,7 @@ namespace MindMinersTest.Models
 
         public async void Validate()
         {
-            if (Path.GetExtension(SrtFile.FileName).ToLowerInvariant() != ".srt")
+            if (SrtFile.FileName == null || Path.GetExtension(SrtFile.FileName).ToLowerInvariant() != ".srt")
                 AddNotification("SrtFile", "O arquivo deve ser .srt");
             if (SrtFile.Length > 200000)
                 AddNotification("SrtFile", "O arquivo não deve ultrapassar os 200Kb");

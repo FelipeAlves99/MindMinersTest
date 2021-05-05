@@ -27,7 +27,7 @@ namespace MindMinersTest.Controllers
         {
             try
             {
-                string path = _webHostEnv.WebRootPath + "\\uploads\\";
+                string path = _webHostEnv.WebRootPath + "/uploads/";
                 var list = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToList();
                 return Ok(list);
             }
@@ -39,7 +39,7 @@ namespace MindMinersTest.Controllers
 
         [HttpGet("Download")]
         public FileResult DownloadFile(string fileName)        
-            => File($"\\uploads\\{fileName}", "application/x-subrip", fileName);    
+            => File($"/uploads/{fileName}", "application/x-subrip", fileName);    
 
         [HttpPost]
         public ActionResult<FileModel> ReceiveFile([FromForm] FileModel model)

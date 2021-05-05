@@ -17,7 +17,7 @@ namespace MindMinersTest.Services
 
         public void SaveFileWithOffset(FileModel model)
         {
-            string path = _webHostEnv.WebRootPath + "\\uploads\\";
+            string path = _webHostEnv.WebRootPath + "/uploads/";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
