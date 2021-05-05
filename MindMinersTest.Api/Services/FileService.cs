@@ -21,11 +21,15 @@ namespace MindMinersTest.Services
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            using (StreamWriter sw = new StreamWriter(path + model.SrtFile.FileName))
+            var newFileName = Path.GetRandomFileName();
+            int index = newFileName.IndexOf(".");
+            newFileName = index > 0 ? newFileName.Substring(0, index) : newFileName;
+
+            using (StreamWriter sw = new StreamWriter($"{path}{newFileName}.srt"))
             {
                 sw.Write(model.OffsetResult);
                 sw.Flush();
             }
         }
     }
-}   
+}
